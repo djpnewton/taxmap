@@ -213,11 +213,23 @@ class _MyHomePageState extends State<MyHomePage> {
           MouseRegion(
             hitTestBehavior: HitTestBehavior.deferToChild,
             cursor: SystemMouseCursors.click,
+            onEnter: (event) {
+              // maybe the on enter event will help for touch screens to capture
+              // the country tapped
+              log.info('Mouse entered');
+              final hit = _hitNotifier.value;
+              if (hit != null) {
+                _prevHitValue =
+                    hit.hitValues.first as HitValue; //TODO: need to cast :(
+                final countryName = _prevHitValue!.countryName;
+                log.info('Mouse hovered: $countryName');
+              }
+            },
             onHover: (event) {
               final hit = _hitNotifier.value;
               if (hit != null) {
                 _prevHitValue =
-                    hit.hitValues.first as HitValue; //TODO: need to cast :
+                    hit.hitValues.first as HitValue; //TODO: need to cast :(
                 final countryName = _prevHitValue!.countryName;
                 log.info('Mouse hovered: $countryName');
               }
