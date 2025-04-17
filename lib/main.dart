@@ -178,6 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final hitResult = _hitNotifier.value;
     if (hitResult != null) {
       final hitValue = hitResult.hitValues.first;
+      final coord = hitResult.coordinate;
       final countryName = hitValue.countryName;
       final countryTax = hitValue.countryTax;
       log.info('Tapped on: $countryName');
@@ -186,10 +187,16 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           return AlertDialog(
             title: Text(countryName),
-            content:
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 countryTax != null
                     ? Text('Personal tax rate of ${countryTax.income.rate}%')
                     : Text('No tax data available'),
+                const SizedBox(height: 10),
+                Text('Coordinates: ${coord.latitude}, ${coord.longitude}'),
+              ],
+            ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
