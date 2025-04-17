@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Polygon<HitValue> _makePolygon(List<LatLng> points, String countryName) {
     final countryTax = _countryTaxData[countryName.toLowerCase()];
-    final personalIncomeRate = countryTax?.income.rate;
+    final personalIncomeRate = countryTax?.income?.rate;
     final color =
         personalIncomeRate == null
             ? Colors.grey
@@ -175,6 +175,75 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String _rateString(double? rate) {
+    if (rate == null) return '';
+    return '$rate%';
+  }
+
+  String _notesString(String? notes, bool territorial, bool citizenshipBased) {
+    if (notes == null || notes.isEmpty) {
+      if (territorial) return ' - territorial tax';
+      if (citizenshipBased) return ' - CITIZENSHIP BASED TAX';
+      return '';
+    }
+    if (territorial) return ' ($notes) - territorial tax';
+    if (citizenshipBased) return ' ($notes) - CITIZENSHIP BASED TAX';
+    return ' ($notes)';
+  }
+
+  Widget _taxItem(Tax tax) {
+    final type = switch (tax.type) {
+      TaxType.capitalGains => 'Capital Gains',
+      TaxType.corporate => 'Corporate',
+      TaxType.income => 'Income',
+      TaxType.inheritance => 'Estate',
+      TaxType.sales => 'Sales',
+      TaxType.wealth => 'Wealth',
+    };
+    final territorialIcon = Icon(Icons.check, color: Colors.green);
+    final citizenshipBased = Icon(Icons.warning, color: Colors.red);
+    final icon = Icon(Icons.info);
+    return switch (tax) {
+      (TaxCorporate c) => ListTile(
+        leading: icon,
+        title: Text(type),
+        subtitle: Text(
+          '${_rateString(c.rate)}${_notesString(c.notes, false, false)}',
+        ),
+      ),
+      (TaxPersonal p) => ListTile(
+        leading:
+            p.territorial
+                ? territorialIcon
+                : p.citizenshipBased
+                ? citizenshipBased
+                : icon,
+        title: Text(type),
+        subtitle: Text(
+          '${_rateString(p.rate)}${_notesString(p.notes, p.territorial, p.citizenshipBased)}',
+        ),
+      ),
+      _ => SizedBox(),
+    };
+  }
+
+  Widget _taxList(CountryTax? countryTax) {
+    if (countryTax == null) {
+      return const Text('No tax data available');
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (countryTax.income != null) _taxItem(countryTax.income!),
+        if (countryTax.capitalGains != null) _taxItem(countryTax.capitalGains!),
+        if (countryTax.wealth != null) _taxItem(countryTax.wealth!),
+        if (countryTax.inheritance != null) _taxItem(countryTax.inheritance!),
+        if (countryTax.corporate != null) _taxItem(countryTax.corporate!),
+        if (countryTax.sales != null) _taxItem(countryTax.sales!),
+      ],
+    );
+  }
+
   void _tapModal() {
     final hitResult = _hitNotifier.value;
     if (hitResult != null) {
@@ -191,11 +260,10 @@ class _MyHomePageState extends State<MyHomePage> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                countryTax != null
-                    ? Text('Personal tax rate of ${countryTax.income.rate}%')
-                    : Text('No tax data available'),
-                const SizedBox(height: 10),
-                Text('Coordinates: ${coord.latitude}, ${coord.longitude}'),
+                _taxList(countryTax),
+                const SizedBox(height: 20),
+                Text('Latitude: ${coord.latitude}'),
+                Text('Longitude: ${coord.longitude}'),
               ],
             ),
             actions: [

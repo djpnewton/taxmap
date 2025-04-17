@@ -5,27 +5,11 @@ countries:
   argentina:
     corporate:
       rate: 30.0
-      notes:
     income:
       rate: 35.0
-      notes:
-      territorial: false
-      citizenship_based: false
-    capital_gains:
-      rate:
-      notes:
-      territorial: false
-      citizenship_based: false
     wealth:
       rate: 1.25
       notes: 0.5-1.25% progressive rates
-      territorial: false
-      citizenship_based: false
-    inheritance:
-      rate:
-      notes:
-      territorial: false
-      citizenship_based: false
     sales:
       rate: 21.0
       notes: Some goods and services have a different rate
@@ -36,52 +20,90 @@ countries:
       notes: some specific industries have an additional rate
     income:
       rate: 13.0
-      notes:
       territorial: true
-      citizenship_based: false
-    capital_gains:
-      rate:
-      notes:
-      territorial: true
-      citizenship_based: false
     wealth:
       rate: 2.4
       notes: 1.2-2.4% progressive rates
       territorial: true
-      citizenship_based: false
-    inheritance:
-      rate:
-      notes:
-      territorial: true
-      citizenship_based: false
     sales:
       rate: 13.0
-      notes:
 
   brazil:
     corporate:
       rate: 15.0
-      notes:
     income:
       rate: 27.5
-      notes:
-      territorial: true
-      citizenship_based: false
     capital_gains:
       rate: 30.0
-      notes:
-      territorial: false
-      citizenship_based: false
-    wealth:
-      rate:
-      notes:
-      territorial: false
-      citizenship_based: false
-    inheritance:
-      rate:
-      notes:
-      territorial: true
-      citizenship_based: false
     sales:
       rate: 17.0
-      notes:
+
+  chile:
+    corporate:
+      rate: 40.0
+    income:
+      rate: 35.5
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 25.0
+    sales:
+      rate: 19.0
+
+  colombia:
+    corporate:
+      rate: 40.0
+    income:
+      rate: 39.0
+    capital_gains:
+      rate: 10.0
+    wealth:
+      rate: 1.5
+      notes: 0.5-1.5% progressive rates
+    inheritance:
+      notes: varies depending on the relationships and assets
+    sales:
+      rate: 19.0
+
+  ecuador:
+    corporate:
+      rate: 28.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    sales:
+      rate: 12.0
+
+  peru:
+    corporate:
+      rate: 29.5
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 30.0
+    sales:
+      rate: 18.0
+
+
+
+  united states of america:
+    corporate:
+      rate: 21.0
+      notes: some states have additional rates
+    income:
+      rate: 37.0
+      notes: some states have additional rates
+      citizenship_based: true
+    capital_gains:
+      rate: 20.0
+      notes: long term capital gains, rates vary by income (0%-20%)
+      citizenship_based: true
+    inheritance:
+      rate: 0.0
+      notes: some states have an inheritance tax
+    sales:
+      rate: 0.0
+      notes: some states have a sales tax
