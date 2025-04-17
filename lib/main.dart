@@ -9,6 +9,11 @@ import 'tax_data.dart';
 
 final log = Logger('Main');
 
+// TODO: ontap highlight country and show details in a side bar or floating panel
+// TODO: add a filter panel change how countries are colored based on your tax thresholds
+// TODO: add a search bar to search for countries?
+// TODO: add a news feed
+
 void main() {
   runApp(const MyApp());
 }
@@ -57,14 +62,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Polygon> _countryPolygons = [];
+  List<Polygon<HitValue>> _countryPolygons = [];
   // ignore: unused_field
   List<Country> _countries = [];
   Map<String, CountryTax> _countryTaxData = {};
 
-  // TODO: will need to cast to HitValue :(
-  final LayerHitNotifier<Object> _hitNotifier = ValueNotifier(null);
-  HitValue? _prevHitValue;
+  final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
+  List<Polygon<HitValue>>? _hoverGons;
 
   @override
   void initState() {
@@ -80,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Polygon _makePolygon(List<LatLng> points, String countryName) {
+  Polygon<HitValue> _makePolygon(List<LatLng> points, String countryName) {
     final countryTax = _countryTaxData[countryName.toLowerCase()];
     final personalIncomeRate = countryTax?.income.rate;
     final color =
@@ -110,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final Map<String, dynamic> geoJson = json.decode(geoJsonData);
 
     final List<Country> countries = [];
-    final List<Polygon> countryPolygons = [];
+    final List<Polygon<HitValue>> countryPolygons = [];
     // Iterate through each feature in the GeoJSON
     for (final feature in geoJson['features']) {
       final name = feature['properties']['name'] as String;
@@ -119,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         continue; // Skip Antarctica
       }
 
-      final List<Polygon> polygons = [];
+      final List<Polygon<HitValue>> polygons = [];
       final Map<String, dynamic> geometry = feature['geometry'];
       if (geometry['type'] == 'MultiPolygon') {
         // Handle MultiPolygon
@@ -171,19 +175,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _tapModal() {
-    if (_prevHitValue != null) {
-      final countryName = _prevHitValue!.countryName;
-      final countryTax = _prevHitValue!.countryTax;
+    final hitResult = _hitNotifier.value;
+    if (hitResult != null) {
+      final hitValue = hitResult.hitValues.first;
+      final coord = hitResult.coordinate;
+      final countryName = hitValue.countryName;
+      final countryTax = hitValue.countryTax;
       log.info('Tapped on: $countryName');
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text(countryName),
-            content:
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 countryTax != null
                     ? Text('Personal tax rate of ${countryTax.income.rate}%')
                     : Text('No tax data available'),
+                const SizedBox(height: 10),
+                Text('Coordinates: ${coord.latitude}, ${coord.longitude}'),
+              ],
+            ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -214,22 +227,32 @@ class _MyHomePageState extends State<MyHomePage> {
             hitTestBehavior: HitTestBehavior.deferToChild,
             cursor: SystemMouseCursors.click,
             onHover: (event) {
+              // use onHover and onExit to show highlighted country
+              // (wont work on touchscreens)
               final hit = _hitNotifier.value;
               if (hit != null) {
-                _prevHitValue =
-                    hit.hitValues.first as HitValue; //TODO: need to cast :
-                final countryName = _prevHitValue!.countryName;
+                final hitValue = hit.hitValues.first;
+                final countryName = hitValue.countryName;
                 log.info('Mouse hovered: $countryName');
+
+                final hoverGons =
+                    _countryPolygons
+                        .where(
+                          (polygon) =>
+                              polygon.hitValue?.countryName == countryName,
+                        )
+                        .toList();
+                setState(() => _hoverGons = hoverGons);
               }
             },
             onExit: (event) {
               log.info('Mouse exited');
-              _prevHitValue = null;
+              setState(() => _hoverGons = null);
             },
             child: GestureDetector(
               onTap: () => _tapModal(),
               child: PolygonLayer(
-                polygons: _countryPolygons,
+                polygons: [..._countryPolygons, ...?_hoverGons],
                 hitNotifier: _hitNotifier,
               ),
             ),
