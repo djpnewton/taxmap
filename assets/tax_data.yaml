@@ -1,0 +1,87 @@
+%YAML 1.2
+---
+
+countries:
+  argentina:
+    corporate:
+      rate: 30.0
+      notes:
+    income:
+      rate: 35.0
+      notes:
+      territorial: false
+      citizenship_based: false
+    capital_gains:
+      rate:
+      notes:
+      territorial: false
+      citizenship_based: false
+    wealth:
+      rate: 1.25
+      notes: 0.5-1.25% progressive rates
+      territorial: false
+      citizenship_based: false
+    inheritance:
+      rate:
+      notes:
+      territorial: false
+      citizenship_based: false
+    sales:
+      rate: 21.0
+      notes: Some goods and services have a different rate
+
+  bolivia:
+    corporate:
+      rate: 25.0
+      notes: some specific industries have an additional rate
+    income:
+      rate: 13.0
+      notes:
+      territorial: true
+      citizenship_based: false
+    capital_gains:
+      rate:
+      notes:
+      territorial: true
+      citizenship_based: false
+    wealth:
+      rate: 2.4
+      notes: 1.2-2.4% progressive rates
+      territorial: true
+      citizenship_based: false
+    inheritance:
+      rate:
+      notes:
+      territorial: true
+      citizenship_based: false
+    sales:
+      rate: 13.0
+      notes:
+
+  brazil:
+    corporate:
+      rate: 15.0
+      notes:
+    income:
+      rate: 27.5
+      notes:
+      territorial: true
+      citizenship_based: false
+    capital_gains:
+      rate: 30.0
+      notes:
+      territorial: false
+      citizenship_based: false
+    wealth:
+      rate:
+      notes:
+      territorial: false
+      citizenship_based: false
+    inheritance:
+      rate:
+      notes:
+      territorial: true
+      citizenship_based: false
+    sales:
+      rate: 17.0
+      notes:
