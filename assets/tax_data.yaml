@@ -2,11 +2,18 @@
 ---
 
 countries:
+  
+  #
+  # South America
+  #
+
   argentina:
     corporate:
       rate: 30.0
     income:
       rate: 35.0
+    capital_gains:
+      rate: 15.0
     wealth:
       rate: 1.25
       notes: 0.5-1.25% progressive rates
@@ -127,6 +134,88 @@ countries:
       notes: 1-55% depending on the amount and relation
     sales:
       rate: 16.0
+
+  #
+  # Central America
+  #
+
+  belize:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 25.0
+    sales:
+      rate: 12.5
+
+  costa rica:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 13.0
+
+  el salvador:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 10.0
+    sales:
+      rate: 13.0
+
+  guatemala:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 7.0
+      territorial: true
+    capital_gains:
+      rate: 10.0
+      territorial: true
+    sales:
+      rate: 12.0
+
+  honduras:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 10.0
+    sales:
+      rate: 15.0
+
+  nicaragua:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 30.0
+      territorial: true
+    capital_gains:
+      rate: 15.0
+      territorial: true
+    sales:
+      rate: 15.0
+
+  panama:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 25.0
+      territorial: true
+    capital_gains:
+      rate: 10.0
+      territorial: true
+    sales:
+      rate: 7.0
+
+  #
+  # North America
+  #
 
 
   united states of america:
