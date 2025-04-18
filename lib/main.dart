@@ -121,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return Polygon<HitValue>(
       points: points,
+      // ignore: deprecated_member_use
       color: color.withOpacity(0.5),
       borderColor: color,
       borderStrokeWidth: 1.0,
