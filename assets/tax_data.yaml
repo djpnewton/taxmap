@@ -87,6 +87,46 @@ countries:
     sales:
       rate: 18.0
 
+  paraguay:
+    corporate:
+      rate: 10.0
+    income:
+      rate: 10.0
+      territorial: true
+    capital_gains:
+      rate: 10.0
+      territorial: true
+    sales:
+      rate: 10.0
+
+  uruguay:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 36.0
+    capital_gains:
+      rate: 12.0
+    wealth:
+      rate: 2.75
+      notes: progressive from 0.7% to 2.75%
+    sales:
+      rate: 22.0
+
+  venezuela:
+    corporate:
+      rate: 34.0
+    income:
+      rate: 34.0
+    capital_gains:
+      rate: 34.0
+      notes: generally taxed as income
+    wealth:
+      rate: 0.25
+    inheritance:
+      rate: 55.0
+      notes: 1-55% depending on the amount and relation
+    sales:
+      rate: 16.0
 
 
   united states of america:
