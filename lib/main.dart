@@ -9,11 +9,10 @@ import 'dart:convert';
 
 import 'tax_data.dart';
 import 'about_page.dart';
+import 'settings.dart';
 
 final log = Logger('Main');
 
-// TODO: ontap highlight country and show details in a side bar or floating panel
-// TODO: add a filter panel change how countries are colored based on your tax thresholds
 // TODO: add a search bar to search for countries?
 // TODO: add a news feed
 
@@ -73,9 +72,20 @@ class _MyHomePageState extends State<MyHomePage> {
   final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
   List<Polygon<HitValue>>? _hoverGons;
 
+  TaxFilter _taxFilter = TaxFilter(
+    type: TaxFilterType.income,
+    rate: 15,
+    territorial: false,
+  );
+
   @override
   void initState() {
     super.initState();
+    Settings.loadTaxFilter().then((value) {
+      setState(() {
+        _taxFilter = value;
+      });
+    });
     _loadTaxData();
     _loadGeoJson();
   }
@@ -88,21 +98,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Polygon<HitValue> _makePolygon(List<LatLng> points, String countryName) {
+    var color = Colors.grey;
     final countryTax = _countryTaxData[countryName.toLowerCase()];
-    final personalIncomeRate = countryTax?.income?.rate;
-    final color =
-        personalIncomeRate == null
-            ? Colors.grey
-            : personalIncomeRate > 20
-            ? Colors.red
-            : personalIncomeRate > 15
-            ? Colors.orange
-            : Colors.green;
-    // TODO: add colors/identifiers for other tax rates/conditions
-
+    if (countryTax != null) {
+      double rate;
+      bool isTerritorial = false;
+      switch (_taxFilter.type) {
+        case TaxFilterType.income:
+          rate = countryTax.income?.rate ?? 0;
+          isTerritorial = countryTax.income?.territorial ?? false;
+          break;
+        case TaxFilterType.capitalGains:
+          rate = countryTax.capitalGains?.rate ?? 0;
+          isTerritorial = countryTax.capitalGains?.territorial ?? false;
+          break;
+      }
+      if (_taxFilter.territorial) {
+        color = isTerritorial || rate == 0 ? Colors.blue : Colors.red;
+      } else {
+        color = rate > _taxFilter.rate ? Colors.red : Colors.green;
+      }
+    }
     return Polygon<HitValue>(
       points: points,
-      // ignore: deprecated_member_use
       color: color.withOpacity(0.5),
       borderColor: color,
       borderStrokeWidth: 1.0,
@@ -191,6 +209,22 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void _updateFilter(
+    TaxFilterType type,
+    double threshold, [
+    bool? territorialOnly,
+  ]) {
+    setState(() {
+      _taxFilter.type = type;
+      _taxFilter.rate = threshold;
+      if (territorialOnly != null) {
+        _taxFilter.territorial = territorialOnly;
+      }
+      Settings.saveTaxFilter(_taxFilter);
+      _loadGeoJson();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -235,6 +269,84 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const AboutPage()),
                 );
               },
+            ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8,
+              ),
+              child: Text(
+                'Filter countries by tax rate:',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: DropdownButton<TaxFilterType>(
+                value: _taxFilter.type,
+                isExpanded: true,
+                items: const [
+                  DropdownMenuItem(
+                    value: TaxFilterType.income,
+                    child: Text('Income Tax'),
+                  ),
+                  DropdownMenuItem(
+                    value: TaxFilterType.capitalGains,
+                    child: Text('Capital Gains Tax'),
+                  ),
+                ],
+                onChanged: (value) {
+                  if (value != null) {
+                    _updateFilter(
+                      value,
+                      _taxFilter.rate,
+                      _taxFilter.territorial,
+                    );
+                  }
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  const Text('Threshold:'),
+                  Expanded(
+                    child: Slider(
+                      value: _taxFilter.rate,
+                      min: 0,
+                      max: 50,
+                      divisions: 50,
+                      label: _taxFilter.rate.toStringAsFixed(1),
+                      onChanged:
+                          _taxFilter.territorial
+                              ? null
+                              : (value) {
+                                _updateFilter(
+                                  _taxFilter.type,
+                                  value,
+                                  _taxFilter.territorial,
+                                );
+                              },
+                    ),
+                  ),
+                  Text('${_taxFilter.rate.toStringAsFixed(1)}%'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: CheckboxListTile(
+                title: const Text('Territorial only'),
+                value: _taxFilter.territorial,
+                onChanged: (checked) {
+                  if (checked != null) {
+                    _updateFilter(_taxFilter.type, _taxFilter.rate, checked);
+                  }
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
             ),
           ],
         ),
