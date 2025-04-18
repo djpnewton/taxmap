@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:logging/logging.dart';
 import 'package:taxmap/tax_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 
 import 'tax_data.dart';
@@ -196,6 +197,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Open the MacroDash website
+              const url = 'https://macrodash.me';
+              launchUrl(Uri.parse(url));
+            },
+            child: const Text(
+              'Visit macrodash.me',
+              style: TextStyle(
+                fontSize: 12, // Small text
+                color: Colors.white, // Text color
+              ),
+            ),
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
