@@ -3,15 +3,16 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:logging/logging.dart';
+import 'package:taxmap/tax_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 
 import 'tax_data.dart';
 import 'about_page.dart';
+import 'settings.dart';
 
 final log = Logger('Main');
 
-// TODO: ontap highlight country and show details in a side bar or floating panel
-// TODO: add a filter panel change how countries are colored based on your tax thresholds
 // TODO: add a search bar to search for countries?
 // TODO: add a news feed
 
@@ -71,9 +72,20 @@ class _MyHomePageState extends State<MyHomePage> {
   final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
   List<Polygon<HitValue>>? _hoverGons;
 
+  TaxFilter _taxFilter = TaxFilter(
+    type: TaxFilterType.income,
+    rate: 15,
+    territorial: false,
+  );
+
   @override
   void initState() {
     super.initState();
+    Settings.loadTaxFilter().then((value) {
+      setState(() {
+        _taxFilter = value;
+      });
+    });
     _loadTaxData();
     _loadGeoJson();
   }
@@ -86,18 +98,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Polygon<HitValue> _makePolygon(List<LatLng> points, String countryName) {
+    var color = Colors.grey;
     final countryTax = _countryTaxData[countryName.toLowerCase()];
-    final personalIncomeRate = countryTax?.income.rate;
-    final color =
-        personalIncomeRate == null
-            ? Colors.grey
-            : personalIncomeRate > 20
-            ? Colors.red
-            : personalIncomeRate > 15
-            ? Colors.orange
-            : Colors.green;
-    // TODO: add colors/identifiers for other tax rates/conditions
-
+    if (countryTax != null) {
+      double rate;
+      bool isTerritorial = false;
+      switch (_taxFilter.type) {
+        case TaxFilterType.income:
+          rate = countryTax.income?.rate ?? 0;
+          isTerritorial = countryTax.income?.territorial ?? false;
+          break;
+        case TaxFilterType.capitalGains:
+          rate = countryTax.capitalGains?.rate ?? 0;
+          isTerritorial = countryTax.capitalGains?.territorial ?? false;
+          break;
+      }
+      if (_taxFilter.territorial) {
+        color = isTerritorial || rate == 0 ? Colors.blue : Colors.red;
+      } else {
+        color = rate > _taxFilter.rate ? Colors.red : Colors.green;
+      }
+    }
     return Polygon<HitValue>(
       points: points,
       // ignore: deprecated_member_use
@@ -175,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _tapModal() {
+  void _tapCountry(BuildContext context) {
     final hitResult = _hitNotifier.value;
     if (hitResult != null) {
       final hitValue = hitResult.hitValues.first;
@@ -183,31 +204,26 @@ class _MyHomePageState extends State<MyHomePage> {
       final countryName = hitValue.countryName;
       final countryTax = hitValue.countryTax;
       log.info('Tapped on: $countryName');
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(countryName),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                countryTax != null
-                    ? Text('Personal tax rate of ${countryTax.income.rate}%')
-                    : Text('No tax data available'),
-                const SizedBox(height: 10),
-                Text('Coordinates: ${coord.latitude}, ${coord.longitude}'),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      log.info('Coordinate: $coord');
+      log.info('Country Tax: $countryTax');
+      taxInfo(context, countryName, countryTax);
     }
+  }
+
+  void _updateFilter(
+    TaxFilterType type,
+    double threshold, [
+    bool? territorialOnly,
+  ]) {
+    setState(() {
+      _taxFilter.type = type;
+      _taxFilter.rate = threshold;
+      if (territorialOnly != null) {
+        _taxFilter.territorial = territorialOnly;
+      }
+      Settings.saveTaxFilter(_taxFilter);
+      _loadGeoJson();
+    });
   }
 
   @override
@@ -216,6 +232,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Open the MacroDash website
+              const url = 'https://macrodash.me';
+              launchUrl(Uri.parse(url));
+            },
+            child: const Text(
+              'Visit macrodash.me',
+              style: TextStyle(
+                fontSize: 12, // Small text
+                color: Colors.white, // Text color
+              ),
+            ),
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -239,50 +271,134 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8,
+              ),
+              child: Text(
+                'Filter countries by tax rate:',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: DropdownButton<TaxFilterType>(
+                value: _taxFilter.type,
+                isExpanded: true,
+                items: const [
+                  DropdownMenuItem(
+                    value: TaxFilterType.income,
+                    child: Text('Income Tax'),
+                  ),
+                  DropdownMenuItem(
+                    value: TaxFilterType.capitalGains,
+                    child: Text('Capital Gains Tax'),
+                  ),
+                ],
+                onChanged: (value) {
+                  if (value != null) {
+                    _updateFilter(
+                      value,
+                      _taxFilter.rate,
+                      _taxFilter.territorial,
+                    );
+                  }
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  const Text('Threshold:'),
+                  Expanded(
+                    child: Slider(
+                      value: _taxFilter.rate,
+                      min: 0,
+                      max: 50,
+                      divisions: 50,
+                      label: _taxFilter.rate.toStringAsFixed(1),
+                      onChanged:
+                          _taxFilter.territorial
+                              ? null
+                              : (value) {
+                                _updateFilter(
+                                  _taxFilter.type,
+                                  value,
+                                  _taxFilter.territorial,
+                                );
+                              },
+                    ),
+                  ),
+                  Text('${_taxFilter.rate.toStringAsFixed(1)}%'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: CheckboxListTile(
+                title: const Text('Territorial only'),
+                value: _taxFilter.territorial,
+                onChanged: (checked) {
+                  if (checked != null) {
+                    _updateFilter(_taxFilter.type, _taxFilter.rate, checked);
+                  }
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+            ),
           ],
         ),
       ),
-      body: FlutterMap(
-        options: MapOptions(initialZoom: 2),
-        children: [
-          TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          ),
-          MouseRegion(
-            hitTestBehavior: HitTestBehavior.deferToChild,
-            cursor: SystemMouseCursors.click,
-            onHover: (event) {
-              // use onHover and onExit to show highlighted country
-              // (wont work on touchscreens)
-              final hit = _hitNotifier.value;
-              if (hit != null) {
-                final hitValue = hit.hitValues.first;
-                final countryName = hitValue.countryName;
-                log.info('Mouse hovered: $countryName');
-
-                final hoverGons =
-                    _countryPolygons
-                        .where(
-                          (polygon) =>
-                              polygon.hitValue?.countryName == countryName,
-                        )
-                        .toList();
-                setState(() => _hoverGons = hoverGons);
-              }
-            },
-            onExit: (event) {
-              log.info('Mouse exited');
-              setState(() => _hoverGons = null);
-            },
-            child: GestureDetector(
-              onTap: () => _tapModal(),
-              child: PolygonLayer(
-                polygons: [..._countryPolygons, ...?_hoverGons],
-                hitNotifier: _hitNotifier,
+      body: Builder(
+        // Create an inner BuildContext so that the onPressed methods
+        // can refer to the Scaffold with Scaffold.of()
+        builder: (context) {
+          return FlutterMap(
+            options: MapOptions(initialZoom: 2),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               ),
-            ),
-          ),
-        ],
+              MouseRegion(
+                hitTestBehavior: HitTestBehavior.deferToChild,
+                cursor: SystemMouseCursors.click,
+                onHover: (event) {
+                  // use onHover and onExit to show highlighted country
+                  // (wont work on touchscreens)
+                  final hit = _hitNotifier.value;
+                  if (hit != null) {
+                    final hitValue = hit.hitValues.first;
+                    final countryName = hitValue.countryName;
+                    log.info('Mouse hovered: $countryName');
+
+                    final hoverGons =
+                        _countryPolygons
+                            .where(
+                              (polygon) =>
+                                  polygon.hitValue?.countryName == countryName,
+                            )
+                            .toList();
+                    setState(() => _hoverGons = hoverGons);
+                  }
+                },
+                onExit: (event) {
+                  log.info('Mouse exited');
+                  setState(() => _hoverGons = null);
+                },
+                child: GestureDetector(
+                  onTap: () => _tapCountry(context),
+                  child: PolygonLayer(
+                    polygons: [..._countryPolygons, ...?_hoverGons],
+                    hitNotifier: _hitNotifier,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
