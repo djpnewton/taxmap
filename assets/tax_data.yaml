@@ -31,7 +31,6 @@ countries:
     wealth:
       rate: 2.4
       notes: 1.2-2.4% progressive rates
-      territorial: true
     sales:
       rate: 13.0
 
