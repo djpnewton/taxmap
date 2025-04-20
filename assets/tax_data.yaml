@@ -217,6 +217,29 @@ countries:
   # North America
   #
 
+  canada:
+    corporate:
+      rate: 15.0
+      notes: some provinces have additional rates
+    income:
+      rate: 33.0
+      notes: some provinces have additional rates
+    capital_gains:
+      rate: 16.5
+      notes: 50% of capital gains are taxable as income
+    sales:
+      rate: 5.0
+      notes: some provinces have additional rates
+
+  mexico:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 30.0
+    sales:
+      rate: 16.0
 
   united states of america:
     corporate:
@@ -236,3 +259,67 @@ countries:
     sales:
       rate: 0.0
       notes: some states have a sales tax
+
+  #
+  # Caribbean
+  #
+
+  cuba:
+    corporate:
+      rate: 15.0
+      notes: foreign companies may be taxed at a different rate
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 10.0
+
+  dominican republic:
+    corporate:
+      rate: 27.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 25.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 3.0
+    sales:
+      rate: 18.0
+
+  jamaica:
+    corporate:
+      rate: 33.33
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 0.0
+      notes: transfer tax on Jamaican real estate and securities
+    inheritance:
+      rate: 0.0
+      notes: 1.5% transfer tax on estates valued over JMD 10 million
+    sales:
+      rate: 15.0
+
+  puerto rico:
+    corporate:
+      rate: 37.5
+    income:
+      rate: 33.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 11.5
+
+  trinidad and tobago:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 30.0
+    sales:
+      rate: 12.5
+
+  the bahamas:
+    sales:
+      rate: 10.0
