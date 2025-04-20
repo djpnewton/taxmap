@@ -61,5 +61,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'taxmap-me.firebasestorage.app',
     measurementId: 'G-DECLSXGW0T',
   );
-
 }
