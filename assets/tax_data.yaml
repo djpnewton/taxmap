@@ -255,6 +255,8 @@ countries:
     inheritance:
       rate: 0.0
       notes: some states have an inheritance tax
+    exit:
+      notes: if you renounce your citizenship, you may be subject to an exit tax on unrealized capital gains
     sales:
       rate: 0.0
       notes: some states have a sales tax
@@ -322,3 +324,211 @@ countries:
   the bahamas:
     sales:
       rate: 10.0
+
+  #
+  # Europe
+  #
+
+  albania:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 23.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 20.0
+
+  armenia:
+    corporate:
+      rate: 18.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+    sale:
+      rate: 20.0
+  
+  austria:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 50.0
+      notes: generally taxed as income
+    sales:
+      rate: 20.0
+
+  belgium:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 50.0
+    inheritance:
+      notes: depends on the region
+    sales:
+      rate: 21.0
+
+  bosnia and herzegovina:
+    corporate:
+      rate: 10.0
+    income:
+      rate: 10.0
+    capital_gains:
+      rate: 10.0
+      notes: generally taxed as income
+    sales:
+      rate: 17.0
+
+  croatia:
+    corporate:
+      rate: 18.0
+    income:
+      rate: 35.40
+      notes: 25% to 35.40% depending on the local government
+    capital_gains:
+      rate: 12.0
+    inheritance:
+      rate: 4.0
+    sales:
+      rate: 25.0
+
+  cyprus:
+    corporate:
+      rate: 12.5
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 19.0
+
+  czech republic:
+    corporate:
+      rate: 21.0
+    income:
+      rate: 23.0
+    capital_gains:
+      rate: 23.0
+      notes: generally taxed as income
+    sales:
+      rate: 21.0
+
+  denmark:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 55.9
+    capital_gains:
+      rate: 55.9
+      notes: generally taxed as income
+    inheritance:
+      rate: 55.9
+      notes: 15% to 55.9% depending on the circumstances
+    sales:
+      rate: 25.0
+
+  estonia:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+      notes: generally taxed as income
+    sales:
+      rate: 22.0
+
+  finland:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 55.0
+    capital_gains:
+      rate: 34.0
+      notes: 30% for gains up to €30,000, 34% for gains above
+    inheritance:
+      notes: depends on the amount and relationship
+    sales:
+      rate: 25.5
+
+  france:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 30.0
+    inheritance:
+      rate: 60.0
+    wealth:
+      rate: 1.5
+    exit:
+      notes: if 6 of the last 10 years were spent as a tax resident of France, you are taxed an exit tax on unrealized capital gains
+    sales:
+      rate: 20.0
+
+  georgia:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+    inheritance:
+      rate: 1.0
+    sales:
+      rate: 18.0
+
+  germany:
+    corporate:
+      notes: 15% federal rate, plus 5.5% solidarity surcharge and local rates
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 26.375
+    inheritance:
+      rate: 50.0
+    sales:
+      rate: 19.0
+
+  greece:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 44.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 40.0
+      notes: categories A/B/C with rates of 10%/20%/40%
+    sales:
+      rate: 24.0
+
+  hungary:
+    corporate:
+      rate: 9.0
+    income:
+      rate: 15.0
+    capital_gains:
+      rate: 15.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 18.0
+      notes: 9% preferential rate for residential property, close family members exempt
+    sales:
+      rate: 27.0
+
+  iceland:
+    corporate:
+      rate: 21.0
+    income:
+      rate: 31.35
+      notes: local government taxes also apply
+    capital_gains:
+      rate: 22.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 24.0

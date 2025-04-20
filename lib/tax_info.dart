@@ -9,13 +9,14 @@ Widget _taxItem(Tax tax) {
     TaxType.inheritance => 'Estate',
     TaxType.sales => 'Sales',
     TaxType.wealth => 'Wealth',
+    TaxType.exit => 'Exit',
   };
   final subtitle = IntrinsicHeight(
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text('${tax.rate}'),
-        if (tax.notes != null)
+        tax.rate != null ? Text('${tax.rate}%') : const SizedBox(),
+        if (tax.rate != null && tax.notes != null)
           const VerticalDivider(thickness: 1, color: Colors.grey),
         if (tax.notes != null)
           Text(
@@ -26,9 +27,12 @@ Widget _taxItem(Tax tax) {
     ),
   );
   return switch (tax) {
-    (TaxCorporate _) => ListTile(
+    (TaxBasic b) => ListTile(
       dense: true,
-      leading: Icon(Icons.info),
+      leading:
+          b.type == TaxType.exit
+              ? Icon(Icons.warning, color: Colors.red)
+              : Icon(Icons.info),
       title: Text(type),
       subtitle: subtitle,
     ),
@@ -70,6 +74,7 @@ Widget _taxList(CountryTax? countryTax) {
       if (countryTax.income != null) _taxItem(countryTax.income!),
       if (countryTax.capitalGains != null) _taxItem(countryTax.capitalGains!),
       if (countryTax.wealth != null) _taxItem(countryTax.wealth!),
+      if (countryTax.exit != null) _taxItem(countryTax.exit!),
       if (countryTax.inheritance != null) _taxItem(countryTax.inheritance!),
       if (countryTax.corporate != null) _taxItem(countryTax.corporate!),
       if (countryTax.sales != null) _taxItem(countryTax.sales!),
