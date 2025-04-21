@@ -346,6 +346,7 @@ countries:
       rate: 20.0
     capital_gains:
       rate: 20.0
+      notes: 20% or 10% depending on the type of property
     sale:
       rate: 20.0
   
@@ -848,3 +849,227 @@ countries:
       rate: 40.0
     sales:
       rate: 20.0
+
+  #
+  # Asia
+  #
+
+  azerbaijan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 25.0
+    inheritance:
+      rate: 25.0
+      notes: exempt for close family members
+    sales:
+      rate: 18.0
+
+  bahrain:
+    corporate:
+      rate: 0.0
+      notes: only oil and gas companies are taxed
+    sales:
+      rate: 10.0
+
+  bangladesh:
+    corporate:
+      rate: 27.5
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 15.0
+      notes: long term capital gains rate (5 years)
+    wealth:
+      notes: surcharge of up to 35% of the income tax payable based on the amount of wealth
+    sales:
+      rate: 15.0
+
+  cambodia:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 10.0
+
+  china:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 13.0
+      notes: some goods and services have a lower rate (9 or 6%)
+
+  india:
+    corporate:
+      rate: 35.0
+      notes: various rates apply to different types of companies 
+    income:
+      rate: 39.0
+    capital_gains:
+      rate: 20.0
+      notes: long term capital gains rate can be lower
+    inheritance:
+      rate: 0.0
+    sales:
+      rate: 18.0
+      notes: 18% is the most common rate, some goods and services have a lower or higher rate
+
+  indonesia:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 0.0
+    sales:
+      rate: 12.0
+
+  japan:
+    corporate:
+      rate: 23.2
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 20.315
+      notes: 20.315% for stock. real estate capital gains are taxed at up to 39.63%
+    inheritance:
+      rate: 55.0
+    sales:
+      rate: 10.0
+
+  kazakhstan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 10.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 12.0
+
+  south korea:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 45.0
+    inheritance:
+      rate: 50.0
+    sales:
+      rate: 10.0
+
+  laos:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 25.0
+    capital_gains:
+      notes: 2% of sale price of shares, Laos Securities Exchange companies exempt
+    sales:
+      rate: 10.0
+
+  malaysia:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 0.0
+      notes: real estate gains are taxed at up to 30%
+    sales:
+      rate: 10.0
+
+  myanmar:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 10.0
+    inheritance:
+      rate: 0.0
+    sales:
+      rate: 5.0
+
+  pakistan:
+    corporate:
+      rate: 29.0
+    income:
+      rate: 35.0
+      notes: 45% for non salaried individuals
+    capital_gains:
+      notes: its complicated
+    sales:
+      rate: 18.0
+
+  philippines:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 6.0
+    sales:
+      rate: 12.0
+
+  singapore:
+    corporate:
+      rate: 17.0
+    income:
+      rate: 24.0
+    sales:
+      rate: 9.0
+
+  taiwan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 40.0
+    capital_gains:
+      rate: 40.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 20.0
+    sales:
+      rate: 5.0
+
+  thailand:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 7.0
+
+  vietnam:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 20.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 10.0
