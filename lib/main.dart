@@ -86,8 +86,10 @@ class _MyHomePageState extends State<MyHomePage> {
         _taxFilter = value;
       });
     });
-    _loadTaxData();
-    _loadGeoJson();
+    _loadTaxData().then((_) {
+      log.info('Tax data loaded');
+      _loadGeoJson();
+    });
   }
 
   Future<void> _loadTaxData() async {
