@@ -71,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
   List<Polygon<HitValue>>? _hoverGons;
+  String _hoverCountry = '';
+  Offset _hoverPt = Offset.zero;
 
   TaxFilter _taxFilter = TaxFilter(
     type: TaxFilterType.income,
@@ -413,12 +415,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                   polygon.hitValue?.countryName == countryName,
                             )
                             .toList();
-                    setState(() => _hoverGons = hoverGons);
+                    setState(() {
+                      _hoverGons = hoverGons;
+                      _hoverCountry = countryName;
+                      _hoverPt = event.localPosition;
+                    });
                   }
                 },
                 onExit: (event) {
                   log.info('Mouse exited');
-                  setState(() => _hoverGons = null);
+                  setState(() {
+                    _hoverGons = null;
+                    _hoverCountry = '';
+                  });
                 },
                 child: GestureDetector(
                   onTap: () => _tapCountry(context),
@@ -428,6 +437,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
+              if (_hoverCountry.isNotEmpty)
+                // Show the country name at the hover point
+                Positioned(
+                  left: _hoverPt.dx + 20,
+                  top: _hoverPt.dy - 10,
+                  child: Text(
+                    _hoverCountry,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
             ],
           );
         },
