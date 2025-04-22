@@ -1073,3 +1073,54 @@ countries:
       rate: 10.0
     sales:
       rate: 10.0
+
+  #
+  # Oceania
+  #
+
+  australia:
+    corporate:
+      rate: 30.0
+      notes: 25% for small businesses
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 45.0
+      notes: 50% discount for assets held for more than 12 months
+    sales:
+      rate: 10.0
+    exit:
+      notes: emigration tax on unrealized capital gains
+  
+  new caledonia:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 40.0
+    capital_gains:
+      notes: 24% for real estate
+    inheritance:
+      notes: 50% for non relatives
+    sales:
+      rate: 11.0
+
+  new zealand:
+    corporate:
+      rate: 28.0
+    income:
+      rate: 39.0
+    capital_gains:
+      rate: 39.0
+      notes: if property used for capital gains taxed as income
+    sales:
+      rate: 15.0
+
+  papua new guinea:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 42.0
+    sales:
+      rate: 10.0
+
+  
