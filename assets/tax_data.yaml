@@ -1123,4 +1123,242 @@ countries:
     sales:
       rate: 10.0
 
-  
+  #
+  # Middle East
+  #
+
+  iraq:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 15.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 6.0
+      notes: 6% on the amount over IQD 90 million
+    sales:
+      notes: varies by category
+
+  israel:
+    corporate:
+      rate: 23.0
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 50.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 18.0
+
+  jordan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 30.0
+    sales:
+      rate: 16.0
+
+  kuwait:
+    corporate:
+      rate: 15.0
+
+  lebanon:
+    corporate:
+      rate: 17.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 45.0
+    sales:
+      rate: 11.0
+
+  oman:
+    corporate:
+      rate: 15.0
+    sales:
+      rate: 5.0
+
+  qatar:
+    corporate:
+      rate: 10.0
+
+  saudi arabia:
+    corporate:
+      rate: 20.0
+    sales:
+      rate: 15.0
+
+  united arab emirates:
+    corporate:
+      rate: 9.0
+    sales:
+      rate: 5.0
+
+  #
+  # Africa
+  #
+
+  algeria:
+    corporate:
+      rate: 26.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 15.0
+    wealth:
+      rate: 1.0
+    inheritance:
+      rate: 5.0
+    sales:
+      rate: 19.0
+
+  angola:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 10.0
+    inheritance:
+      rate: 2.0
+      notes: lower rates for close family members
+    sales:
+      rate: 14.0
+
+  cameroon:
+    corporate:
+      rate: 33.0
+    income:
+      rate: 38.5
+    capital_gains:
+      rate: 16.5
+      notes: real property capital gains are taxed at 30%, stocks at 16.5%
+    inheritance:
+      rate: 5.0
+    sales:
+      rate: 19.25
+
+  egypt:
+    corporate:
+      rate: 22.5
+    income:
+      rate: 27.5
+    capital_gains:
+      rate: 27.5
+      notes: 0, 10 or 27.5%
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 14.0
+
+  kenya:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 16.0
+
+  morocco:
+    corporate:
+      rate: 34.0
+    income:
+      rate: 37.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 20.0
+
+  nigeria:
+    corporate:
+      rate: 30.0
+      notes: 20% for small companies, 0% for micro companies
+    income:
+      rate: 24.0
+    capital_gains:
+      rate: 10.0
+    sales:
+      rate: 7.5
+
+  rwanda:
+    corporate:
+      rate: 28.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 5.0
+    sales:
+      rate: 18.0
+
+  senegal:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 43.0
+    capital_gains:
+      rate: 43.0
+    sales:
+      rate: 18.0
+
+  south africa:
+    corporate:
+      rate: 27.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 18.0
+    inheritance:
+      rate: 25.0
+    sales:
+      rate: 15.0
+
+  united republic of tanzania:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 30.0
+    sales:
+      rate: 18.0
+
+  tunisia:
+    corporate:
+      rate: 15.0
+    income: 
+      rate: 35.0
+    capital_gains:
+      rate: 15.0
+      notes: short term capital gains can be 10%
+    wealth:
+      rate: 0.5
+    inheritance:
+      rate: 2.5
+    sales:
+      rate: 19.0
+
+  uganda:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 40.0
+    capital_gains:
+      rate: 40.0
+    inheritance:
+      rate: 1.0
+    sales:
+      rate: 18.0
+
+  zambia:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 37.0
+    sales:
+      rate: 16.0
