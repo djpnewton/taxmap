@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taxmap/tax_data.dart';
 
-String _rateString(double? rate) {
-  if (rate == null) return '';
-  return '$rate%';
-}
-
-String _notesString(String? notes, bool territorial, bool citizenshipBased) {
-  if (notes == null || notes.isEmpty) {
-    if (territorial) return ' - territorial tax';
-    if (citizenshipBased) return ' - CITIZENSHIP BASED TAX';
-    return '';
-  }
-  if (territorial) return ' ($notes) - territorial tax';
-  if (citizenshipBased) return ' ($notes) - CITIZENSHIP BASED TAX';
-  return ' ($notes)';
-}
-
 Widget _taxItem(Tax tax) {
   final type = switch (tax.type) {
     TaxType.capitalGains => 'Capital Gains',
@@ -25,29 +9,56 @@ Widget _taxItem(Tax tax) {
     TaxType.inheritance => 'Estate',
     TaxType.sales => 'Sales',
     TaxType.wealth => 'Wealth',
+    TaxType.exit => 'Exit',
   };
-  final territorialIcon = Icon(Icons.check, color: Colors.green);
-  final citizenshipBased = Icon(Icons.warning, color: Colors.red);
-  final icon = Icon(Icons.info);
+  final subtitle = IntrinsicHeight(
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        tax.rate != null ? Text('${tax.rate}%') : const SizedBox(),
+        if (tax.rate != null && tax.notes != null)
+          const VerticalDivider(thickness: 1, color: Colors.grey),
+        if (tax.notes != null)
+          Text(
+            '${tax.notes}',
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+          ),
+      ],
+    ),
+  );
   return switch (tax) {
-    (TaxCorporate c) => ListTile(
-      leading: icon,
+    (TaxBasic b) => ListTile(
+      dense: true,
+      leading:
+          b.type == TaxType.exit
+              ? Icon(Icons.warning, color: Colors.red)
+              : Icon(Icons.info),
       title: Text(type),
-      subtitle: Text(
-        '${_rateString(c.rate)}${_notesString(c.notes, false, false)}',
-      ),
+      subtitle: subtitle,
     ),
     (TaxPersonal p) => ListTile(
-      leading:
-          p.territorial
-              ? territorialIcon
-              : p.citizenshipBased
-              ? citizenshipBased
-              : icon,
+      dense: true,
+      leading: Icon(Icons.info),
       title: Text(type),
-      subtitle: Text(
-        '${_rateString(p.rate)}${_notesString(p.notes, p.territorial, p.citizenshipBased)}',
-      ),
+      subtitle: subtitle,
+      trailing:
+          p.territorial
+              ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.shield, color: Colors.green),
+                  Text('Territorial'),
+                ],
+              )
+              : p.citizenshipBased
+              ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.warning, color: Colors.red),
+                  Text('Citizenship Based'),
+                ],
+              )
+              : null,
     ),
     _ => SizedBox(),
   };
@@ -63,6 +74,7 @@ Widget _taxList(CountryTax? countryTax) {
       if (countryTax.income != null) _taxItem(countryTax.income!),
       if (countryTax.capitalGains != null) _taxItem(countryTax.capitalGains!),
       if (countryTax.wealth != null) _taxItem(countryTax.wealth!),
+      if (countryTax.exit != null) _taxItem(countryTax.exit!),
       if (countryTax.inheritance != null) _taxItem(countryTax.inheritance!),
       if (countryTax.corporate != null) _taxItem(countryTax.corporate!),
       if (countryTax.sales != null) _taxItem(countryTax.sales!),
@@ -71,28 +83,35 @@ Widget _taxList(CountryTax? countryTax) {
 }
 
 void taxInfo(BuildContext context, String countryName, CountryTax? countryTax) {
-  Scaffold.of(context).showBottomSheet((context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(countryName, style: Theme.of(context).textTheme.titleMedium),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the bottom sheet
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          _taxList(countryTax),
-        ],
-      ),
-    );
-  });
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) {
+      return Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  countryName,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the bottom sheet
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            _taxList(countryTax),
+          ],
+        ),
+      );
+    },
+  );
 }

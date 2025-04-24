@@ -1,7 +1,15 @@
 import 'package:yaml/yaml.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-enum TaxType { corporate, income, capitalGains, wealth, inheritance, sales }
+enum TaxType {
+  corporate,
+  income,
+  capitalGains,
+  wealth,
+  exit,
+  inheritance,
+  sales,
+}
 
 abstract class Tax {
   final TaxType type;
@@ -11,12 +19,8 @@ abstract class Tax {
   Tax({required this.type, required this.rate, required this.notes});
 }
 
-class TaxCorporate extends Tax {
-  TaxCorporate({
-    required super.type,
-    required super.rate,
-    required super.notes,
-  });
+class TaxBasic extends Tax {
+  TaxBasic({required super.type, required super.rate, required super.notes});
 }
 
 class TaxPersonal extends Tax {
@@ -38,6 +42,7 @@ class CountryTax {
   final TaxPersonal? income;
   final TaxPersonal? capitalGains;
   final TaxPersonal? wealth;
+  final Tax? exit;
   final TaxPersonal? inheritance;
   final Tax? sales;
 
@@ -47,6 +52,7 @@ class CountryTax {
     required this.income,
     required this.capitalGains,
     required this.wealth,
+    required this.exit,
     required this.inheritance,
     required this.sales,
   });
@@ -67,7 +73,7 @@ Future<Map<String, CountryTax>> parseTaxData() async {
     final YamlMap country = entry.value;
     Tax? sales;
     if (country.containsKey('sales')) {
-      sales = TaxCorporate(
+      sales = TaxBasic(
         type: TaxType.sales,
         rate:
             country['sales'].containsKey('rate')
@@ -81,7 +87,7 @@ Future<Map<String, CountryTax>> parseTaxData() async {
     }
     Tax? corporate;
     if (country.containsKey('corporate')) {
-      corporate = TaxCorporate(
+      corporate = TaxBasic(
         type: TaxType.corporate,
         rate:
             country['corporate'].containsKey('rate')
@@ -159,6 +165,20 @@ Future<Map<String, CountryTax>> parseTaxData() async {
                 : false,
       );
     }
+    Tax? exit;
+    if (country.containsKey('exit')) {
+      exit = TaxBasic(
+        type: TaxType.exit,
+        rate:
+            country['exit'].containsKey('rate')
+                ? country['exit']['rate']
+                : null,
+        notes:
+            country['exit'].containsKey('notes')
+                ? country['exit']['notes']
+                : null,
+      );
+    }
     TaxPersonal? inheritance;
     if (country.containsKey('inheritance')) {
       inheritance = TaxPersonal(
@@ -187,6 +207,7 @@ Future<Map<String, CountryTax>> parseTaxData() async {
       income: income,
       capitalGains: capitalGains,
       wealth: wealth,
+      exit: exit,
       inheritance: inheritance,
       sales: sales,
     );

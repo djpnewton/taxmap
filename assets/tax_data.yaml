@@ -31,7 +31,6 @@ countries:
     wealth:
       rate: 2.4
       notes: 1.2-2.4% progressive rates
-      territorial: true
     sales:
       rate: 13.0
 
@@ -217,6 +216,29 @@ countries:
   # North America
   #
 
+  canada:
+    corporate:
+      rate: 15.0
+      notes: some provinces have additional rates
+    income:
+      rate: 33.0
+      notes: some provinces have additional rates
+    capital_gains:
+      rate: 16.5
+      notes: 50% of capital gains are taxable as income
+    sales:
+      rate: 5.0
+      notes: some provinces have additional rates
+
+  mexico:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 30.0
+    sales:
+      rate: 16.0
 
   united states of america:
     corporate:
@@ -233,6 +255,1110 @@ countries:
     inheritance:
       rate: 0.0
       notes: some states have an inheritance tax
+    exit:
+      notes: if you renounce your citizenship, you may be subject to an exit tax on unrealized capital gains
     sales:
       rate: 0.0
       notes: some states have a sales tax
+
+  #
+  # Caribbean
+  #
+
+  cuba:
+    corporate:
+      rate: 15.0
+      notes: foreign companies may be taxed at a different rate
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 10.0
+
+  dominican republic:
+    corporate:
+      rate: 27.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 25.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 3.0
+    sales:
+      rate: 18.0
+
+  jamaica:
+    corporate:
+      rate: 33.33
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 0.0
+      notes: transfer tax on Jamaican real estate and securities
+    inheritance:
+      rate: 0.0
+      notes: 1.5% transfer tax on estates valued over JMD 10 million
+    sales:
+      rate: 15.0
+
+  puerto rico:
+    corporate:
+      rate: 37.5
+    income:
+      rate: 33.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 11.5
+
+  trinidad and tobago:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 30.0
+    sales:
+      rate: 12.5
+
+  the bahamas:
+    sales:
+      rate: 10.0
+
+  #
+  # Europe
+  #
+
+  albania:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 23.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 20.0
+
+  armenia:
+    corporate:
+      rate: 18.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+      notes: 20% or 10% depending on the type of property
+    sale:
+      rate: 20.0
+  
+  austria:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 50.0
+      notes: generally taxed as income
+    sales:
+      rate: 20.0
+
+  belgium:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 50.0
+    inheritance:
+      notes: depends on the region
+    sales:
+      rate: 21.0
+
+  bosnia and herzegovina:
+    corporate:
+      rate: 10.0
+    income:
+      rate: 10.0
+    capital_gains:
+      rate: 10.0
+      notes: generally taxed as income
+    sales:
+      rate: 17.0
+
+  croatia:
+    corporate:
+      rate: 18.0
+    income:
+      rate: 35.40
+      notes: 25% to 35.40% depending on the local government
+    capital_gains:
+      rate: 12.0
+    inheritance:
+      rate: 4.0
+    sales:
+      rate: 25.0
+
+  cyprus:
+    corporate:
+      rate: 12.5
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 19.0
+
+  czech republic:
+    corporate:
+      rate: 21.0
+    income:
+      rate: 23.0
+    capital_gains:
+      rate: 23.0
+      notes: generally taxed as income
+    sales:
+      rate: 21.0
+
+  denmark:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 55.9
+    capital_gains:
+      rate: 55.9
+      notes: generally taxed as income
+    inheritance:
+      rate: 55.9
+      notes: 15% to 55.9% depending on the circumstances
+    sales:
+      rate: 25.0
+
+  estonia:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+      notes: generally taxed as income
+    sales:
+      rate: 22.0
+
+  finland:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 55.0
+    capital_gains:
+      rate: 34.0
+      notes: 30% for gains up to €30,000, 34% for gains above
+    inheritance:
+      notes: depends on the amount and relationship
+    sales:
+      rate: 25.5
+
+  france:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 30.0
+    inheritance:
+      rate: 60.0
+    wealth:
+      rate: 1.5
+    exit:
+      notes: if 6 of the last 10 years were spent as a tax resident of France, you are taxed an exit tax on unrealized capital gains
+    sales:
+      rate: 20.0
+
+  georgia:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+    inheritance:
+      rate: 1.0
+    sales:
+      rate: 18.0
+
+  germany:
+    corporate:
+      notes: 15% federal rate, plus 5.5% solidarity surcharge and local rates
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 26.375
+    inheritance:
+      rate: 50.0
+    exit:
+      notes: unrealized capital gains are taxed of companies that you have a 1% or more share when leaving Germany
+    sales:
+      rate: 19.0
+
+  greece:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 44.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 40.0
+      notes: categories A/B/C with rates of 10%/20%/40%
+    sales:
+      rate: 24.0
+
+  hungary:
+    corporate:
+      rate: 9.0
+    income:
+      rate: 15.0
+    capital_gains:
+      rate: 15.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 18.0
+      notes: 9% preferential rate for residential property, close family members exempt
+    sales:
+      rate: 27.0
+
+  iceland:
+    corporate:
+      rate: 21.0
+    income:
+      rate: 31.35
+      notes: local government taxes also apply
+    capital_gains:
+      rate: 22.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 24.0
+
+  ireland:
+    corporate:
+      rate: 12.5
+    income:
+      rate: 40.0
+    capital_gains:
+      rate: 33.0
+    inheritance:
+      rate: 33.0
+    sales:
+      rate: 23.0
+
+  italy:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 43.0
+    capital_gains:
+      rate: 26.0
+    inheritance:
+      rate: 8.0
+    wealth:
+      notes: real estate outside of Italy 1.06%, investments outside of Italy 0.2%
+    sales:
+      rate: 22.0
+
+  latvia:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 36.0
+    capital_gains:
+      rate: 25.5
+    sales:
+      rate: 21.0
+
+  liechtenstein:
+    corporate:
+      rate: 12.5
+    income:
+      rate: 22.4
+    capital_gains:
+      notes: real esate capital gains are taxed at up to 24%, shares are exempt
+    sales:
+      rate: 8.1
+
+  lithuania:
+    corporate:
+      rate: 16.0
+    income:
+      rate: 32.0
+    capital_gains:
+      rate: 20.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 21.0
+
+  luxembourg:
+    corporate:
+      rate: 28.87
+    income:
+      rate: 42.0
+      notes: plus a 9% solidarity tax
+    capital_gains:
+      rate: 42.0
+      notes: generally taxed as income
+    wealth:
+      rate: 0.5
+      notes: 0.5% up to EUR 500 million, 0.05% above
+    sales:
+      rate: 17.0
+
+  malta:
+    corporate:
+      rate: 35.0
+    income:
+      rate: 35.0
+    capital_gains:
+      notes: 15% to 35%
+    sales:
+      rate: 18.0
+
+  moldova:
+    corporate:
+      rate: 12.0
+    income:
+      rate: 12.0
+    capital_gains:
+      rate: 12.0
+    wealth:
+      rate: 0.8
+    sales:
+      rate: 20.0
+
+  montenegro:
+    corporate:
+      rate: 9.0
+    income:
+      rate: 15.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      notes: 3-6% on real estate
+    sales:
+      rate: 21.0
+
+  netherlands:
+    corporate:
+      rate: 25.8
+    income:
+      rate: 49.5
+    inheritance:
+      rate: 40.0
+    wealth:
+      notes: deemed income is taxed on investments
+    exit:
+      notes: The government is working on a tax for unrealized capital gains upon leaving the country
+    sales:
+      rate: 21.0
+
+  north_macedonia:
+    corporate:
+      rate: 10.0
+    income:
+      rate: 10.0
+    capital_gains:
+      rate: 10.0
+    inheritance:
+      rate: 5.0
+      notes: 0-5% depending on the relationship and municipality
+    sales:
+      rate: 18.0
+
+  norway:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 47.4
+    capital_gains:
+      rate: 37.84
+    wealth:
+      rate: 1.1
+      notes: 1% and 1.1% on weath over NOK 20 million
+    exit:
+      notes: emigration tax on unrealized capital gains if the gains are over NOK 500,000
+    sales:
+      rate: 25.0
+
+  poland:
+    corporate:
+      rate: 19.0
+    income:
+      rate: 32.0
+    capital_gains:
+      rate: 19.0
+      notes: real property at income tax rates, shares at 19%
+    sales:
+      rate: 23.0
+
+  portugal:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 48.0
+    capital_gains:
+      rate: 28.0
+    inheritance:
+      rate: 10.0
+    exit:
+      notes: emigration tax on unrealized capital gains
+    sales:
+      rate: 23.0
+
+  romania:
+    corporate:
+      rate: 16.0
+    income:
+      rate: 10.0
+    capital_gains:
+      rate: 10.0
+    inheritance:
+      rate: 1.0
+    sales:
+      rate: 19.0
+
+  russia:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 15.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 20.0
+
+  republic of serbia:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 2.5
+      notes: 0-2.5% depending on the relationship
+    sales:
+      rate: 20.0
+
+  slovakia:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 19.0
+    sales:
+      rate: 23.0
+
+  slovenia:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 25.0
+    inheritance:
+      notes: 0-40% depending on relationship and amount
+    sales:
+      rate: 22.0
+
+  spain:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 47.0
+      notes: some regions have additional rates
+    capital_gains:
+      rate: 30.0
+    inheritance:
+      rate: 34.0
+    wealth:
+      rate: 3.5
+    exit:
+      notes: if tax resident for 10 of the last 15 years with shares worth more then €4 million (or €1 million and over 25% of the company)
+    sales:
+      rate: 21.0
+
+  sweden:
+    corporate:
+      rate: 20.6
+    income:
+      rate: 20.0
+      notes: local government taxes also apply
+    capital_gains:
+      rate: 30.0
+    exit:
+      notes: “realization rule” if been resident for 10 of the last 15 years
+    sales:
+      rate: 25.0
+
+  switzerland:
+    corporate:
+      rate: 20.5
+      notes: varies by canton (effective 11.9% to 20.5%)
+    income:
+      rate: 11.5
+      notes: local taxes also apply
+    capital_gains:
+      notes: generally exempt, but real estate can have a local capital gains tax 
+    inheritance:
+      notes: close family generally exempt, but local taxes may apply
+    wealth:
+      notes: varies by canton
+    sales:
+      rate: 8.1
+
+  turkey:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 40.0
+    capital_gains:
+      rate: 40.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 20.0
+
+  ukraine:
+    corporate:
+      rate: 18.0
+    income:
+      rate: 18.0
+    capital_gains:
+      rate: 18.0
+    inheritance:
+      rate: 18.0
+    sales:
+      rate: 20.0
+
+  united kingdom:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 45.0
+      notes: scottish residents have different rates
+    capital_gains:
+      rate: 24.0
+    inheritance:
+      rate: 40.0
+    sales:
+      rate: 20.0
+
+  #
+  # Asia
+  #
+
+  azerbaijan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 25.0
+    inheritance:
+      rate: 25.0
+      notes: exempt for close family members
+    sales:
+      rate: 18.0
+
+  bahrain:
+    corporate:
+      rate: 0.0
+      notes: only oil and gas companies are taxed
+    sales:
+      rate: 10.0
+
+  bangladesh:
+    corporate:
+      rate: 27.5
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 15.0
+      notes: long term capital gains rate (5 years)
+    wealth:
+      notes: surcharge of up to 35% of the income tax payable based on the amount of wealth
+    sales:
+      rate: 15.0
+
+  cambodia:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 20.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 10.0
+
+  china:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 13.0
+      notes: some goods and services have a lower rate (9 or 6%)
+
+  india:
+    corporate:
+      rate: 35.0
+      notes: various rates apply to different types of companies 
+    income:
+      rate: 39.0
+    capital_gains:
+      rate: 20.0
+      notes: long term capital gains rate can be lower
+    inheritance:
+      rate: 0.0
+    sales:
+      rate: 18.0
+      notes: 18% is the most common rate, some goods and services have a lower or higher rate
+
+  indonesia:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 0.0
+    sales:
+      rate: 12.0
+
+  japan:
+    corporate:
+      rate: 23.2
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 20.315
+      notes: 20.315% for stock. real estate capital gains are taxed at up to 39.63%
+    inheritance:
+      rate: 55.0
+    sales:
+      rate: 10.0
+
+  kazakhstan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 10.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 12.0
+
+  south korea:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 45.0
+    inheritance:
+      rate: 50.0
+    sales:
+      rate: 10.0
+
+  laos:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 25.0
+    capital_gains:
+      notes: 2% of sale price of shares, Laos Securities Exchange companies exempt
+    sales:
+      rate: 10.0
+
+  malaysia:
+    corporate:
+      rate: 24.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 0.0
+      notes: real estate gains are taxed at up to 30%
+    sales:
+      rate: 10.0
+
+  myanmar:
+    corporate:
+      rate: 22.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 10.0
+    inheritance:
+      rate: 0.0
+    sales:
+      rate: 5.0
+
+  pakistan:
+    corporate:
+      rate: 29.0
+    income:
+      rate: 35.0
+      notes: 45% for non salaried individuals
+    capital_gains:
+      notes: its complicated
+    sales:
+      rate: 18.0
+
+  philippines:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 6.0
+    sales:
+      rate: 12.0
+
+  singapore:
+    corporate:
+      rate: 17.0
+    income:
+      rate: 24.0
+    sales:
+      rate: 9.0
+
+  taiwan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 40.0
+    capital_gains:
+      rate: 40.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 20.0
+    sales:
+      rate: 5.0
+
+  thailand:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 35.0
+      notes: generally taxed as income
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 7.0
+
+  vietnam:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 20.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 10.0
+
+  #
+  # Oceania
+  #
+
+  australia:
+    corporate:
+      rate: 30.0
+      notes: 25% for small businesses
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 45.0
+      notes: 50% discount for assets held for more than 12 months
+    sales:
+      rate: 10.0
+    exit:
+      notes: emigration tax on unrealized capital gains
+  
+  new caledonia:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 40.0
+    capital_gains:
+      notes: 24% for real estate
+    inheritance:
+      notes: 50% for non relatives
+    sales:
+      rate: 11.0
+
+  new zealand:
+    corporate:
+      rate: 28.0
+    income:
+      rate: 39.0
+    capital_gains:
+      rate: 39.0
+      notes: if property used for capital gains taxed as income
+    sales:
+      rate: 15.0
+
+  papua new guinea:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 42.0
+    sales:
+      rate: 10.0
+
+  #
+  # Middle East
+  #
+
+  iraq:
+    corporate:
+      rate: 15.0
+    income:
+      rate: 15.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 6.0
+      notes: 6% on the amount over IQD 90 million
+    sales:
+      notes: varies by category
+
+  israel:
+    corporate:
+      rate: 23.0
+    income:
+      rate: 50.0
+    capital_gains:
+      rate: 50.0
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 18.0
+
+  jordan:
+    corporate:
+      rate: 20.0
+    income:
+      rate: 30.0
+    sales:
+      rate: 16.0
+
+  kuwait:
+    corporate:
+      rate: 15.0
+
+  lebanon:
+    corporate:
+      rate: 17.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 15.0
+    inheritance:
+      rate: 45.0
+    sales:
+      rate: 11.0
+
+  oman:
+    corporate:
+      rate: 15.0
+    sales:
+      rate: 5.0
+
+  qatar:
+    corporate:
+      rate: 10.0
+
+  saudi arabia:
+    corporate:
+      rate: 20.0
+    sales:
+      rate: 15.0
+
+  united arab emirates:
+    corporate:
+      rate: 9.0
+    sales:
+      rate: 5.0
+
+  #
+  # Africa
+  #
+
+  algeria:
+    corporate:
+      rate: 26.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 15.0
+    wealth:
+      rate: 1.0
+    inheritance:
+      rate: 5.0
+    sales:
+      rate: 19.0
+
+  angola:
+    corporate:
+      rate: 25.0
+    income:
+      rate: 25.0
+    capital_gains:
+      rate: 10.0
+    inheritance:
+      rate: 2.0
+      notes: lower rates for close family members
+    sales:
+      rate: 14.0
+
+  cameroon:
+    corporate:
+      rate: 33.0
+    income:
+      rate: 38.5
+    capital_gains:
+      rate: 16.5
+      notes: real property capital gains are taxed at 30%, stocks at 16.5%
+    inheritance:
+      rate: 5.0
+    sales:
+      rate: 19.25
+
+  egypt:
+    corporate:
+      rate: 22.5
+    income:
+      rate: 27.5
+    capital_gains:
+      rate: 27.5
+      notes: 0, 10 or 27.5%
+    inheritance:
+      rate: 10.0
+    sales:
+      rate: 14.0
+
+  kenya:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 35.0
+    capital_gains:
+      rate: 15.0
+    sales:
+      rate: 16.0
+
+  morocco:
+    corporate:
+      rate: 34.0
+    income:
+      rate: 37.0
+    capital_gains:
+      rate: 20.0
+    sales:
+      rate: 20.0
+
+  nigeria:
+    corporate:
+      rate: 30.0
+      notes: 20% for small companies, 0% for micro companies
+    income:
+      rate: 24.0
+    capital_gains:
+      rate: 10.0
+    sales:
+      rate: 7.5
+
+  rwanda:
+    corporate:
+      rate: 28.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 5.0
+    sales:
+      rate: 18.0
+
+  senegal:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 43.0
+    capital_gains:
+      rate: 43.0
+    sales:
+      rate: 18.0
+
+  south africa:
+    corporate:
+      rate: 27.0
+    income:
+      rate: 45.0
+    capital_gains:
+      rate: 18.0
+    inheritance:
+      rate: 25.0
+    sales:
+      rate: 15.0
+
+  united republic of tanzania:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 30.0
+    capital_gains:
+      rate: 30.0
+    sales:
+      rate: 18.0
+
+  tunisia:
+    corporate:
+      rate: 15.0
+    income: 
+      rate: 35.0
+    capital_gains:
+      rate: 15.0
+      notes: short term capital gains can be 10%
+    wealth:
+      rate: 0.5
+    inheritance:
+      rate: 2.5
+    sales:
+      rate: 19.0
+
+  uganda:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 40.0
+    capital_gains:
+      rate: 40.0
+    inheritance:
+      rate: 1.0
+    sales:
+      rate: 18.0
+
+  zambia:
+    corporate:
+      rate: 30.0
+    income:
+      rate: 37.0
+    sales:
+      rate: 16.0

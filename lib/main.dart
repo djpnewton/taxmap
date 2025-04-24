@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
       ),
-      home: const MyHomePage(title: 'Tax Map Home Page'),
+      home: const MyHomePage(title: 'Tax Map'),
     );
   }
 }
@@ -74,6 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
   List<Polygon<HitValue>>? _hoverGons;
+  String _hoverCountry = '';
+  Offset _hoverPt = Offset.zero;
 
   TaxFilter _taxFilter = TaxFilter(
     type: TaxFilterType.income,
@@ -237,26 +239,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isNarrow = MediaQuery.of(context).size.width < 500;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Open the MacroDash website
-              const url = 'https://macrodash.me';
-              launchUrl(Uri.parse(url));
-            },
-            child: const Text(
-              'Visit macrodash.me',
-              style: TextStyle(
-                fontSize: 12, // Small text
-                color: Colors.white, // Text color
-              ),
-            ),
-          ),
-        ],
+        actions:
+            isNarrow
+                ? null
+                : [
+                  TextButton.icon(
+                    onPressed: () {
+                      const url = 'https://github.com/djpnewton/taxmap';
+                      launchUrl(Uri.parse(url));
+                    },
+                    icon: const Icon(Icons.code, size: 12),
+                    label: const Text(
+                      'Contribute on GitHub',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      const url = 'https://macrodash.me';
+                      launchUrl(Uri.parse(url));
+                    },
+                    icon: const Icon(Icons.public, size: 12),
+                    label: const Text(
+                      'Visit macrodash.me',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -271,16 +286,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('About'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const AboutPage()),
-                );
-              },
-            ),
-            const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
@@ -362,6 +367,33 @@ class _MyHomePageState extends State<MyHomePage> {
                 controlAffinity: ListTileControlAffinity.leading,
               ),
             ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.code),
+              title: const Text('Contribute on GitHub'),
+              onTap: () {
+                const url = 'https://github.com/djpnewton/taxmap';
+                launchUrl(Uri.parse(url));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.public),
+              title: const Text('Visit macrodash.me'),
+              onTap: () {
+                const url = 'https://macrodash.me';
+                launchUrl(Uri.parse(url));
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const AboutPage()),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -395,12 +427,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                   polygon.hitValue?.countryName == countryName,
                             )
                             .toList();
-                    setState(() => _hoverGons = hoverGons);
+                    setState(() {
+                      _hoverGons = hoverGons;
+                      _hoverCountry = countryName;
+                      _hoverPt = event.localPosition;
+                    });
                   }
                 },
                 onExit: (event) {
                   log.info('Mouse exited');
-                  setState(() => _hoverGons = null);
+                  setState(() {
+                    _hoverGons = null;
+                    _hoverCountry = '';
+                  });
                 },
                 child: GestureDetector(
                   onTap: () => _tapCountry(context),
@@ -410,6 +449,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
+              if (_hoverCountry.isNotEmpty)
+                // Show the country name at the hover point
+                Positioned(
+                  left: _hoverPt.dx + 20,
+                  top: _hoverPt.dy - 10,
+                  child: Text(
+                    _hoverCountry,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
             ],
           );
         },
