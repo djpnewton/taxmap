@@ -18,7 +18,10 @@ FirebaseAnalytics firebaseInst() {
   if (UniversalPlatform.isWeb) {
     return FirebaseAnalytics.instanceFor(
       app: Firebase.app(),
-      webOptions: {'cookie_flags': 'max-age=7200;secure;samesite=none'},
+      webOptions: {
+        'cookie_flags': 'max-age=7200;secure;samesite=none',
+        'cookieFlags': 'max-age=7200;secure;samesite=none',
+      },
     );
   }
   return FirebaseAnalytics.instance;
