@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:logging/logging.dart';
@@ -10,13 +11,15 @@ import 'dart:convert';
 import 'tax_data.dart';
 import 'about_page.dart';
 import 'settings.dart';
+import 'firebase.dart';
 
 final log = Logger('Main');
 
 // TODO: add a search bar to search for countries?
 // TODO: add a news feed
 
-void main() {
+void main() async {
+  await firebaseInit();
   runApp(const MyApp());
 }
 
@@ -91,7 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     _loadTaxData().then((_) {
       log.info('Tax data loaded');
-      _loadGeoJson();
+      _loadGeoJson().then((_) {
+        log.info('GeoJSON data loaded');
+        firebaseLogEvent('app_loaded');
+      });
     });
   }
 
@@ -212,6 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
       log.info('Coordinate: $coord');
       log.info('Country Tax: $countryTax');
       taxInfo(context, countryName, countryTax);
+      firebaseSelectContent(FirebaseContentType.country, countryName);
     }
   }
 
@@ -312,6 +319,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       _taxFilter.rate,
                       _taxFilter.territorial,
                     );
+                    firebaseSelectContent(
+                      FirebaseContentType.taxFilterType,
+                      value.name,
+                    );
                   }
                 },
               ),
@@ -396,6 +407,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                tileProvider: CancellableNetworkTileProvider(),
               ),
               MouseRegion(
                 hitTestBehavior: HitTestBehavior.deferToChild,
