@@ -73,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Polygon<HitValue>>? _hoverGons;
   String _hoverCountry = '';
   Offset _hoverPt = Offset.zero;
+  DateTime _lastHoverTime = DateTime(0);
 
   TaxFilter _taxFilter = TaxFilter(
     type: TaxFilterType.income,
@@ -419,6 +420,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       _hoverGons = hoverGons;
                       _hoverCountry = countryName;
                       _hoverPt = event.localPosition;
+                    });
+                    // set timer to clear hoverCountry after short delay
+                    // to avoid onExit not being called on touch devices
+                    _lastHoverTime = DateTime.now();
+                    Future.delayed(const Duration(milliseconds: 500), () {
+                      if (DateTime.now()
+                              .difference(_lastHoverTime)
+                              .inMilliseconds <
+                          500) {
+                        return;
+                      }
+                      setState(() => _hoverCountry = '');
                     });
                   }
                 },
