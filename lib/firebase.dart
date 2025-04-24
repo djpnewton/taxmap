@@ -13,6 +13,17 @@ Future<void> firebaseInit() async {
   }
 }
 
+FirebaseAnalytics firebaseInst() {
+  // firebase only setup for web
+  if (UniversalPlatform.isWeb) {
+    return FirebaseAnalytics.instanceFor(
+      app: Firebase.app(),
+      webOptions: {"cookie_flags": "SameSite=None; Secure"},
+    );
+  }
+  return FirebaseAnalytics.instance;
+}
+
 Future<void> firebaseLogEvent(
   String eventName, {
   Map<String, Object>? parameters,
@@ -20,10 +31,7 @@ Future<void> firebaseLogEvent(
   if (!UniversalPlatform.isWeb) {
     return;
   }
-  await FirebaseAnalytics.instance.logEvent(
-    name: eventName,
-    parameters: parameters,
-  );
+  await firebaseInst().logEvent(name: eventName, parameters: parameters);
 }
 
 enum FirebaseContentType { country, taxFilterType }
@@ -35,7 +43,7 @@ Future<void> firebaseSelectContent(
   if (!UniversalPlatform.isWeb) {
     return;
   }
-  await FirebaseAnalytics.instance.logSelectContent(
+  await firebaseInst().logSelectContent(
     contentType: contentType.name,
     itemId: id,
   );
